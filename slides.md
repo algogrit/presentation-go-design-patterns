@@ -117,10 +117,10 @@ Here you are trying to *learn* something, while here your *brain* is doing you a
 ### Some tips
 
 - Slow down => stop & think
-  listen for the questions and answer
+  - listen for the questions and answer
 
 - Do the exercises
-  not add-ons; not optional
+  - not add-ons; not optional
 
 - There are no dumb questions!
 
@@ -131,7 +131,7 @@ Here you are trying to *learn* something, while here your *brain* is doing you a
 ### Some tips (continued)
 
 - Take notes
-  Refer to the them for a few days
+  - Try: *Repetitive Spaced Out Learning*
 
 - Talk about it out loud
 
