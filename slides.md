@@ -17,7 +17,9 @@ class: center, middle
 ---
 
 - Experienced Go developers
+
 - Looking to skill up & work with more complex challenges
+
 - Looking to refactor & simplify existing code bases
 
 ---
@@ -28,8 +30,11 @@ class: center, middle
 ---
 
 - Why everything your friends know about factory patterns is wrong?
+
 - Find out how `Starbuzz` coffee doubled their stock price with the Decorator pattern
+
 - Avoiding those embarrassing coupling mistakes
+
 - Discover the secrets of the pattern guru
 
 .content-credits[https://www.oreilly.com/library/view/head-first-design/0596007124/]
@@ -343,7 +348,12 @@ An interface can compose another interface
 ---
 class: center, middle
 
-### **SOLID**
+### **SOLID** principles
+
+---
+class: center, middle
+
+#### Single-Responsibity principle
 
 ---
 
