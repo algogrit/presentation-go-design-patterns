@@ -348,7 +348,53 @@ An interface can compose another interface
 ---
 class: center, middle
 
+## Software Design
+
+---
+class: center, middle
+
+### Code Reviews
+
+---
+class: center, middle
+
+What makes you say "that code is ugly" or "wow that code is beautiful"?
+
+---
+class: center, middle
+
+### Bad code!?
+
+---
+class: center, middle
+
+What are some of the properties of bad code that you might pick up on in code review?
+
+---
+
+- *Rigid*. Is the code rigid? Does it have a straight jacket of overbearing types and parameters, that making modification difficult?
+
+- *Fragile*. Is the code fragile? Does the slightest change ripple through the code base causing untold havoc?
+
+- *Immobile*. Is the code hard to refactor? Is it one keystroke away from an import loop?
+
+- *Complex*. Is there code for the sake of having code, are things over-engineered?
+
+- *Verbose*. Is it just exhausting to use the code? When you look at it, can you even tell what this code is trying to do?
+
+.content-credits[https://dave.cheney.net/2016/08/20/solid-go-design]
+
+---
+class: center, middle
+
+### Good Design
+
+---
+class: center, middle
+
 ### **SOLID** principles
+
+.content-credits[https://dave.cheney.net/2016/08/20/solid-go-design]
 
 ---
 class: center, middle
@@ -356,7 +402,206 @@ class: center, middle
 #### Single-Responsibity principle
 
 ---
+class: center, middle
 
+> A class should have one, and only one, reason to change. - Robert C Martin
+
+---
+
+- Coupling & Cohesion
+
+Coupling is simply a word that describes two things changing together – a movement in one induces a movement in another.
+
+In the context of software, cohesion is the property of describing pieces of code are naturally attracted to one another.
+
+---
+
+- Package names
+
+A package’s name is both a description of its purpose, and a name space prefix.
+
+---
+
+- Bad package names
+
+What does package `server` provide?... well a server, hopefully, but which protocol?
+
+What does package `private` provide? Things that I should not see? Should it have any public symbols?
+
+And package `common`, just like its partner in crime, package `utils`, is often found close by these other offenders.
+
+---
+class: center, middle
+
+Catch all packages like these become a dumping ground for miscellany, and because they have many responsibilities they change frequently and without cause.
+
+---
+
+##### Go's UNIX philosophy
+
+> Do one thing, and do it well.
+
+---
+class: center, middle
+
+#### Open / Closed Principle
+
+---
+class: center, middle
+
+> Software entities should be open for extension, but closed for modification. - Bertrand Meyer
+
+---
+class: center, middle
+
+Go does not support function overloading or even overriding
+
+---
+class: center, middle
+
+#### Liskov Substitution principle
+
+---
+class: center, middle
+
+> Coined by Barbara Liskov, the Liskov substitution principle states, roughly, that two types are substitutable if they exhibit behaviour such that the caller is unable to tell the difference.
+
+---
+class: center, middle
+
+> In a class based language, Liskov’s substitution principle is commonly interpreted as a specification for an abstract base class with various concrete subtypes. But Go does not have classes, or inheritance, so substitution cannot be implemented in terms of an abstract class hierarchy.
+
+---
+class: center, middle
+
+##### Interface
+
+---
+class: center, middle
+
+> Require no more, promise no less. – Jim Weirich
+
+---
+class: center, middle
+
+#### Interface segregation principle
+
+---
+class: center, middle
+
+> Clients should not be forced to depend on methods they do not use. - Robert C Martin
+
+---
+class: center, middle
+
+In Go, the application of the interface segregation principle can refer to a process of isolating the behavior required for a function to do its job.
+
+---
+class: center, middle
+
+> A great rule of thumb for Go is **accept interfaces, return structs**. - Jack Lindamood
+
+---
+class: center, middle
+
+#### Dependency Inversion principle
+
+---
+class: center, middle
+
+> High-level modules should not depend on low-level modules. Both should depend on abstractions.
+> Abstractions should not depend on details. Details should depend on abstractions.
+> – Robert C. Martin
+
+---
+
+- If you’ve applied all the principles we’ve talked about up to this point then your code should already be factored into discrete packages, each with a single well defined responsibility or purpose.
+
+- Your code should describe its dependencies in terms of interfaces, and those interfaces should be factored to describe only the behaviour those functions require.
+
+---
+class: center, middle
+
+> In other words, there shouldn’t be much left to do.
+
+---
+class: center, middle
+
+In Go, your import graph must be acyclic. A failure to respect this acyclic requirement is grounds for a compilation failure, but more gravely represents a serious error in design.
+
+---
+
+class: center, middle
+
+![Clean Architecture](assets/images/CleanArchitecture.jpg)
+
+---
+
+#### Layers
+
+- Entities (entities)
+
+  Defines all the Models in the application
+
+- Repository
+
+  Encapsulates the interaction with the database. This is the lowest layer in the application.
+
+- Services
+
+  Orchestrates the interaction with repository and other services.
+
+---
+
+#### Layers (continued)
+
+- Transport
+
+  Encapsulates the interaction with application over an http API
+
+- Binaries
+
+  The code in `cmd/server` ties all the layers together, in order the start the app.
+
+---
+class: center, middle
+
+Sample App: [YAES Server](https://github.com/algogrit/yaes-server)
+
+---
+
+#### SOLID - summary
+
+The Single Responsibility Principle encourages you to structure the functions, types, and methods into packages that exhibit natural cohesion; the types belong together, the functions serve a single purpose.
+
+The Open / Closed Principle encourages you to compose simple types into more complex ones using embedding.
+
+The Liskov Substitution Principle encourages you to express the dependencies between your packages in terms of interfaces, not concrete types. By defining small interfaces, we can be more confident that implementations will faithfully satisfy their contract.
+
+---
+
+#### SOLID - summary (continued)
+
+The Interface Substitution Principle takes that idea further and encourages you to define functions and methods that depend only on the behaviour that they need. If your function only requires a parameter of an interface type with a single method, then it is more likely that this function has only one responsibility.
+
+The Dependency Inversion Principle encourages you move the knowledge of the things your package depends on from compile time–in Go we see this with a reduction in the number of import statements used by a particular package–to run time.
+
+---
+class: center, middle
+
+> interfaces let you apply the SOLID principles to Go programs. - Dave Cheney
+
+---
+class: center, middle
+
+> **Design** is the art of arranging code that needs to work today, and to be easy to change forever. - Sandi Metz
+
+---
+class: center, middle
+
+### Design Patterns
+
+---
 class: center, middle
 
 Code
