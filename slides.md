@@ -643,10 +643,18 @@ class: center, middle
 #### Creational Pattern
 
 ---
+class: center, middle
 
-##### Creational patterns
+*Creational* design patterns abstract the instantiation process. They help make a system independent of how it's objects are created, composed and represented.
 
-- *Builder*
+---
+class: center, middle
+
+The basic form of object creation could result in design problems or in added complexity to the design. *Creational* design patterns solve this problem by somehow controlling this object creation.
+
+---
+
+- Builder
 
 - Factories
 
@@ -654,6 +662,123 @@ class: center, middle
 
 - Singleton
 
+---
+class: center, middle
+
+##### Builder Pattern
+
+---
+class: center, middle
+
+Lets you construct complex objects step by step. The pattern allows you to produce different types and representations of an object using the same construction code.
+
+---
+
+Imagine a complex object that requires laborious, step-by-step initialization of many fields and nested objects. Such initialization code is usually buried inside a monstrous constructor with lots of parameters. Or even worse: scattered all over the client code.
+
+---
+class: center, middle
+
+![House builder](assets/images/patterns/builder-house-problem.png)
+
+---
+class: center, middle
+
+![House Constructor](assets/images/patterns/house-constructor-problem.png)
+
+---
+class: center, middle
+
+##### Factory Pattern
+
+---
+class: center, middle
+
+The Factory Method pattern suggests that you replace direct object construction calls with calls to a special factory method.
+
+---
+
+Imagine that you’re creating a logistics management application. The first version of your app can only handle transportation by trucks, so the bulk of your code lives inside the Truck class.
+
+At present, most of your code is coupled to the Truck class. Adding Ships into the app would require making changes to the entire codebase. Moreover, if later you decide to add another type of transportation to the app, you will probably need to make all of these changes again.
+
+---
+class: center, middle
+
+![logistics Solution](assets/images/patterns/factory-logistics-sol.png)
+
+---
+class: center, middle
+
+##### Prototype Pattern
+
+---
+class: center, middle
+
+Prototype is a creational design pattern that lets you copy existing objects without making your code dependent on their classes.
+
+---
+
+Say you have an object, and you want to create an exact copy of it. How would you do it? First, you have to create a new object of the same class. Then you have to go through all the fields of the original object and copy their values over to the new object.
+
+---
+class: center, middle
+
+![Prototype Problem](assets/images/patterns/factory-logistics-sol.png)
+
+---
+class: center, middle
+
+To perform a copy of a prototype, we need to be able to perform a **deep copy**
+
+---
+
+- The Prototype pattern delegates the cloning process to the actual objects that are being cloned.
+
+- The pattern declares a common interface for all objects that support cloning.
+
+- This interface lets you clone an object without coupling your code to the class of that object.
+
+- Usually, such an interface contains just a single clone method.
+
+---
+class: center, middle
+
+##### Singleton Pattern
+
+---
+class: center, middle
+
+Singleton is a creational design pattern that lets you ensure that a class has only one instance, while providing a global access point to this instance.
+
+---
+
+Why would anyone want to control how many instances a class has? The most common reason for this is to control access to some shared resource—for example, a database or a file.
+
+Or the construction call is expensive.
+
+Or provide a global access point to that instance.
+
+---
+class: center, middle
+
+![Singleton client view](assets/images/patterns/singleton-client.png)
+
+---
+
+###### Cons of Singleton
+
+- Violates the Single Responsibility Principle. The pattern solves two problems at the time.
+
+- The Singleton pattern can mask bad design, for instance, when the components of the program know too much about each other.
+
+---
+
+###### Cons of Singleton (continued)
+
+- The pattern requires special treatment in a multi-threaded environment so that multiple threads won’t create a singleton object several times.
+
+- It may be difficult to unit test the client code of the Singleton because many test frameworks rely on inheritance when producing mock objects. Since the constructor of the singleton class is private and overriding static methods is impossible in most languages, you will need to think of a creative way to mock the singleton. Or just don’t write the tests. Or don’t use the Singleton pattern.
 
 ---
 class: center, middle
