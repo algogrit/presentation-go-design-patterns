@@ -640,7 +640,7 @@ Patterns can be categorized into 3:
 ---
 class: center, middle
 
-#### Creational Pattern
+#### Creational Patterns
 
 ---
 class: center, middle
@@ -715,7 +715,7 @@ class: center, middle
 ---
 class: center, middle
 
-Prototype is a creational design pattern that lets you copy existing objects without making your code dependent on their classes.
+*Prototype* is a creational design pattern that lets you copy existing objects without making your code dependent on their classes.
 
 ---
 
@@ -724,7 +724,7 @@ Say you have an object, and you want to create an exact copy of it. How would yo
 ---
 class: center, middle
 
-![Prototype Problem](assets/images/patterns/factory-logistics-sol.png)
+![Prototype Problem](assets/images/patterns/prototype-problem.png)
 
 ---
 class: center, middle
@@ -749,11 +749,13 @@ class: center, middle
 ---
 class: center, middle
 
-Singleton is a creational design pattern that lets you ensure that a class has only one instance, while providing a global access point to this instance.
+*Singleton* is a creational design pattern that lets you ensure that a class has only one instance, while providing a global access point to this instance.
 
 ---
 
-Why would anyone want to control how many instances a class has? The most common reason for this is to control access to some shared resource—for example, a database or a file.
+Why would anyone want to control how many instances a class has?
+
+The most common reason for this is to control access to some shared resource—for example, a database or a file.
 
 Or the construction call is expensive.
 
@@ -763,6 +765,11 @@ Or provide a global access point to that instance.
 class: center, middle
 
 ![Singleton client view](assets/images/patterns/singleton-client.png)
+
+---
+class: center, middle
+
+> When discussing which patterns to drop, we found that we still love them all. (Not really -- I'm in favor of dropping Singleton. It's use is almost always a design smell.) - Elrich Gamma
 
 ---
 
@@ -779,6 +786,270 @@ class: center, middle
 - The pattern requires special treatment in a multi-threaded environment so that multiple threads won’t create a singleton object several times.
 
 - It may be difficult to unit test the client code of the Singleton because many test frameworks rely on inheritance when producing mock objects. Since the constructor of the singleton class is private and overriding static methods is impossible in most languages, you will need to think of a creative way to mock the singleton. Or just don’t write the tests. Or don’t use the Singleton pattern.
+
+---
+class: center, middle
+
+#### Structural Patterns
+
+---
+class: center, middle
+
+*Structural* patterns are concerned with how objects are composed of to form large structures.
+
+---
+
+Structural patterns explain how to assemble objects and classes into larger structures while keeping these structures flexible and efficient.
+
+Structural design patterns are design patterns that ease the design by identifying a simple way to realize relationships between entities.
+
+---
+
+- Adapter
+
+- Bridge
+
+- Composite
+
+- Decorator
+
+- Facade
+
+- Flyweight
+
+- Proxy
+
+---
+class: center, middle
+
+##### Adapter Pattern
+
+---
+class: center, middle
+
+*Adapter* is a structural design pattern that allows objects with incompatible interfaces to collaborate.
+
+---
+
+Imagine that you’re creating a stock market monitoring app. The app downloads the stock data from multiple sources in XML format and then displays nice-looking charts and diagrams for the user.
+
+At some point, you decide to improve the app by integrating a smart 3rd-party analytics library. But there’s a catch: the analytics library only works with data in JSON format.
+
+You could change the library to work with XML. However, this might break some existing code that relies on the library. And worse, you might not have access to the library’s source code in the first place, making this approach impossible.
+
+---
+class: center, middle
+
+![Adapter Travel Bag](assets/images/patterns/adapter-travel.png)
+
+---
+class: center, middle
+
+A construct which adapts an existing interface X to conform to existing interface Y.
+
+---
+class: center, middle
+
+##### Bridge Pattern
+
+---
+class: center, middle
+
+*Bridge* is a structural design pattern that divides business logic or huge class into separate class hierarchies that can be developed independently.
+
+---
+
+- Decouples an interface from its implementation so that the two can vary independently
+
+- Bridge prevents a `Cartesian product` complexity explosion
+
+---
+
+Say you have a geometric Shape class with a pair of subclasses: Circle and Square. You want to extend this class hierarchy to incorporate colors, so you plan to create Red and Blue shape subclasses. However, since you already have two subclasses, you’ll need to create four class combinations such as BlueCircle and RedSquare.
+
+Adding new shape types and colors to the hierarchy will grow it exponentially. For example, to add a triangle shape you’d need to introduce two subclasses, one for each color. And after that, adding a new color would require creating three subclasses, one for each shape type. The further we go, the worse it becomes.
+
+---
+class: center, middle
+
+![Bridge Shapes](assets/images/patterns/bridge-shapes.png)
+
+---
+class: center, middle
+
+Bridge lets you split a large class or a set of closely related classes into two separate hierarchies—abstraction and implementation—which can be developed independently of each other.
+
+---
+class: center, middle
+
+**Hollywood Principle** states: *"Don't Call Us, We'll Call You."*
+
+---
+class: center, middle
+
+##### Composite Pattern
+
+---
+class: center, middle
+
+*Composite* is a structural design pattern that lets you compose objects into tree structures and then work with these structures as if they were individual objects.
+
+---
+
+- Composition lets us make compound objects
+
+- Using the Composite pattern makes sense only when the core model of your app can be represented as a tree.
+
+- The Composite pattern lets you run a behavior recursively over all components of an object tree.
+
+---
+
+Imagine that you have two types of objects: Products and Boxes. A Box can contain several Products as well as a number of smaller Boxes. These little Boxes can also hold some Products or even smaller Boxes, and so on.
+
+Say you decide to create an ordering system that uses these classes. Orders could contain simple products without any wrapping, as well as boxes stuffed with products...and other boxes. How would you determine the total price of such an order?
+
+---
+class: center, middle
+
+![Composite Problem](assets/images/patterns/composite-problem.png)
+
+---
+class: center, middle
+
+A mechanism for treating individual (scalar) objects and compositions of objects in a uniform manner.
+
+---
+class: center, middle
+
+##### Decorator
+
+---
+class: center, middle
+
+*Decorator* is a structural design pattern that lets you attach new behaviors to objects by placing these objects inside special wrapper objects that contain the behaviors.
+
+---
+
+- Want to augment an object with additional functionality
+
+- Do not want to rewrite or alter existing code (OCP)
+
+- Want to keep new functionality separate (SRP)
+
+Solution: Embed the objects
+
+---
+
+Imagine that you’re working on a notification library which lets other programs notify their users about important events.
+
+The initial version of the library was based on the Notifier class that had only a few fields, a constructor and a single send method.
+
+At some point, you realize that users of the library expect more than just email notifications. Many of them would like to receive an SMS about critical issues. Others would like to be notified on Facebook and, of course, the corporate users would love to get Slack notifications.
+
+How hard can that be? You extended the Notifier class and put the additional notification methods into new subclasses. Now the client was supposed to instantiate the desired notification class and use it for all further notifications.
+
+But then someone reasonably asked you, "Why can’t you use several notification types at once? If your house is on fire, you’d probably want to be informed through every channel."
+
+---
+class: center, middle
+
+![Decorator Problem](assets/images/patterns/decorator-problem.png)
+
+---
+class: center, middle
+
+Decorator pattern is often used to emulate multiple inheritance
+
+---
+class: center, middle
+
+##### Facade Pattern
+
+---
+class: center, middle
+
+*Facade* is a structural design pattern that provides a simplified interface to a library, a framework, or any other complex set of classes.
+
+---
+
+- Balancing complexity and presentation/usability
+
+- A facade is a class that provides a simple interface to a complex subsystem which contains lots of moving parts.
+
+- A facade might provide limited functionality in comparison to working with the subsystem directly. However, it includes only those features that clients really care about.
+
+- Having a facade is handy when you need to integrate your app with a sophisticated library that has dozens of features, but you just need a tiny bit of its functionality.
+
+---
+
+Imagine that you must make your code work with a broad set of objects that belong to a sophisticated library or framework. Ordinarily, you’d need to initialize all of those objects, keep track of dependencies, execute methods in the correct order, and so on.
+
+As a result, the business logic of your classes would become tightly coupled to the implementation details of 3rd-party classes, making it hard to comprehend and maintain.
+
+- Check account
+- Check security PIN
+- Credit/debit balance
+- Make ledger entry
+- Send notification
+
+---
+class: center, middle
+
+![Facade Problem](assets/images/patterns/facade-problem.png)
+
+---
+class: center, middle
+
+Build a *Facade* to provide a simplified API over a set of components
+
+---
+class: center, middle
+
+##### Flyweight Pattern
+
+---
+class: center, middle
+
+*Flyweight* is a structural design pattern that lets you fit more objects into the available amount of RAM by sharing common parts of state between multiple objects instead of keeping all of the data in each object.
+
+---
+
+To have some fun after long working hours, you decided to create a simple video game: players would be moving around a map and shooting each other. You chose to implement a realistic particle system and make it a distinctive feature of the game. Vast quantities of bullets, missiles, and shrapnel from explosions should fly all over the map and deliver a thrilling experience to the player.
+
+Upon its completion, you pushed the last commit, built the game and sent it to your friend for a test drive. Although the game was running flawlessly on your machine, your friend wasn’t able to play for long. On his computer, the game kept crashing after a few minutes of gameplay. After spending several hours digging through debug logs, you discovered that the game crashed because of an insufficient amount of RAM. It turned out that your friend’s rig was much less powerful than your own computer, and that’s why the problem emerged so quickly on his machine.
+
+---
+
+class: center, middle
+
+![Flyweight Representation](assets/images/patterns/flyweight-representation.png)
+
+---
+class: center, middle
+
+Flyweight is space optimization technique that lets us use less memory by storing externally the data associated with similar objects.
+
+---
+class: center, middle
+
+##### Proxy Pattern
+
+---
+class: center, middle
+
+*Proxy* is a structural design pattern that lets you provide a substitute or placeholder for another object. A proxy controls access to the original object, allowing you to perform something either before or after the request gets through to the original object.
+
+---
+
+Why would you want to control access to an object? Here is an example: you have a massive object that consumes a vast amount of system resources. You need it from time to time, but not always.
+
+You could implement lazy initialization: create this object only when it’s actually needed. All of the object’s clients would need to execute some deferred initialization code. Unfortunately, this would probably cause a lot of code duplication.
+
+---
+
+class: center, middle
+
+![Proxy Problem](assets/images/patterns/proxy-problem.png)
 
 ---
 class: center, middle
