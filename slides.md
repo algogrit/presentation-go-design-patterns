@@ -604,6 +604,60 @@ class: center, middle
 ---
 class: center, middle
 
+Design patterns are typical solutions to commonly occurring problems in software design. They are like pre-made blueprints that you can customize to solve a recurring design problem in your code.
+
+---
+class: center, middle
+
+There are at least 24 known design patterns.
+
+.content-credits[https://refactoring.guru/design-patterns/catalog]
+
+---
+class: center, middle
+
+![Catalog of Design Patterns](assets/images/catalog.png)
+
+.content-credits[https://refactoring.guru/design-patterns/catalog]
+
+---
+class: center, middle
+
+![Relationship between patterns](assets/images/patterns-relationship.png)
+
+.content-credits[Design Patterns: Elements of Reusable Object-Oriented Software by GoF]
+
+---
+
+Patterns can be categorized into 3:
+
+- Creational
+
+- Structural
+
+- Behavioral
+
+---
+class: center, middle
+
+#### Creational Pattern
+
+---
+
+##### Creational patterns
+
+- *Builder*
+
+- Factories
+
+- Prototype
+
+- Singleton
+
+
+---
+class: center, middle
+
 Code
 https://github.com/AgarwalConsulting/Go-Training/tree/master/patterns/design
 
