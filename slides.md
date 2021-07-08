@@ -1054,6 +1054,21 @@ class: center, middle
 ---
 class: center, middle
 
+Proxy is a type that functions as an interface to a particular resource. That resource may be remote, expensive to construct, or may require logging or some other added functionality.
+
+---
+
+###### Proxy vs Decorator
+
+- Proxy tries to provide an identical interface; decorator provides an enhanced interface
+
+- Decorator typically aggregates (or has pointer to) what it is decorating; proxy doesn't have to
+
+- Proxy might not even be working with a materialized object
+
+---
+class: center, middle
+
 Code
 https://github.com/AgarwalConsulting/Go-Training/tree/master/patterns/design
 
