@@ -755,11 +755,11 @@ class: center, middle
 
 Why would anyone want to control how many instances a class has?
 
-The most common reason for this is to control access to some shared resource—for example, a database or a file.
+- The most common reason for this is to control access to some shared resource—for example, a database or a file.
 
-Or the construction call is expensive.
+- Or the construction call is expensive.
 
-Or provide a global access point to that instance.
+- Or provide a global access point to that instance.
 
 ---
 class: center, middle
@@ -1065,6 +1065,195 @@ Proxy is a type that functions as an interface to a particular resource. That re
 - Decorator typically aggregates (or has pointer to) what it is decorating; proxy doesn't have to
 
 - Proxy might not even be working with a materialized object
+
+---
+class: center, middle
+
+#### Behavioral Patterns
+
+---
+class: center, middle
+
+*Behavioral* patterns are concerned with algorithms and the assignment of responsibilities between objects.
+
+---
+class: center, middle
+
+Behavioral patterns describe not just patterns of objects but also the patterns of communication between them.
+
+---
+
+- Chain of Responsibility
+- Command
+- Interpreter
+- Iterator
+- Mediator
+- Memento
+- Observer
+- State
+- Strategy
+- Template Method
+- Visitor
+
+---
+class: center, middle
+
+##### Chain of Responsibility
+
+---
+class: center, middle
+
+*Chain of Responsibility* is behavioral design pattern that allows passing request along the chain of potential handlers until one of them handles request.
+
+---
+class: center, middle
+
+Upon receiving a request, each handler decides either to process the request or to pass it to the next handler in the chain.
+
+The pattern allows multiple objects to handle the request without coupling sender class to the concrete classes of the receivers. The chain can be composed dynamically at runtime with any handler that follows a standard handler interface.
+
+---
+
+Imagine that you’re working on an online ordering system. You want to restrict access to the system so only authenticated users can create orders. Also, users who have administrative permissions must have full access to all orders.
+
+After a bit of planning, you realized that these checks must be performed sequentially. The application can attempt to authenticate a user to the system whenever it receives a request that contains the user’s credentials. However, if those credentials aren’t correct and authentication fails, there’s no reason to proceed with any other checks.
+
+---
+
+During the next few months, you implemented several more of those sequential checks.
+
+- One of your colleagues suggested that it’s unsafe to pass raw data straight to the ordering system. So you added an extra validation step to sanitize the data in a request.
+
+- Later, somebody noticed that the system is vulnerable to brute force password cracking. To negate this, you promptly added a check that filters repeated failed requests coming from the same IP address.
+
+- Someone else suggested that you could speed up the system by returning cached results on repeated requests containing the same data. Hence, you added another check which lets the request pass through to the system only if there’s no suitable cached response.
+
+---
+
+class: center, middle
+
+![CoR Problem](assets/images/patterns/chain_of_responsibility-problem.png)
+
+---
+
+- Like many other behavioral design patterns, the Chain of Responsibility relies on transforming particular behaviors into stand-alone objects called handlers. In our case, each check should be extracted to its own class with a single method that performs the check. The request, along with its data, is passed to this method as an argument.
+
+- The pattern suggests that you link these handlers into a chain. Each linked handler has a field for storing a reference to the next handler in the chain. In addition to processing a request, handlers pass the request further along the chain. The request travels along the chain until all handlers have had a chance to process it.
+
+---
+class: center, middle
+
+A chain of components who all get a chance to process a command or a query, optionally having default processing implementation & an ability to terminate the processing chain.
+
+---
+
+Application of CoR Pattern
+
+- Command query Separation
+
+---
+class: center, middle
+
+Command = asking for an action or change
+
+Query = asking for information
+
+CQS = having separate means of sending commands & queries to
+
+---
+class: center, middle
+
+##### Command
+
+---
+class: center, middle
+
+*Command* is a behavioral design pattern that turns a request into a stand-alone object that contains all information about the request. This transformation lets you pass requests as a method arguments, delay or queue a request’s execution, and support undoable operations.
+
+---
+
+Imagine that you’re working on a new text-editor app. Your current task is to create a toolbar with a bunch of buttons for various operations of the editor. You created a very neat Button class that can be used for buttons on the toolbar, as well as for generic buttons in various dialogs.
+
+While all of these buttons look similar, they’re all supposed to do different things. Where would you put the code for the various click handlers of these buttons? The simplest solution is to create tons of subclasses for each place where the button is used. These subclasses would contain the code that would have to be executed on a button click.
+
+Before long, you realize that this approach is deeply flawed. First, you have an enormous number of subclasses, and that would be okay if you weren’t risking breaking the code in these subclasses each time you modify the base Button class. Put simply, your GUI code has become awkwardly dependent on the volatile code of the business logic.
+
+---
+
+class: center, middle
+
+![Command Problem](assets/images/patterns/command-problem.png)
+
+---
+class: center, middle
+
+An object which represents an instruction to perform a particular action. Contains all the information necessary for the action to be taken.
+
+---
+class: center, middle
+
+##### Interpreter
+
+---
+class: center, middle
+
+Given a language, define a representation for its grammar along with an interpreter that uses the representation to interpret sentences in the language.
+
+---
+class: center, middle
+
+A component that processes structured text data. Does so by turning it into separate lexical tokens (lexing) and then interpreting sequences of said tokens (parsing).
+
+---
+class: center, middle
+
+##### Iterator
+
+---
+class: center, middle
+
+*Iterator* is a behavioral design pattern that lets you traverse elements of a collection without exposing its underlying representation (list, stack, tree, etc.).
+
+---
+
+Most collections store their elements in simple lists. However, some of them are based on stacks, trees, graphs and other complex data structures.
+
+But no matter how a collection is structured, it must provide some way of accessing its elements so that other code can use these elements. There should be a way to go through each element of the collection without accessing the same elements over and over.
+
+This may sound like an easy job if you have a collection based on a list. You just loop over all of the elements. But how do you sequentially traverse elements of a complex data structure, such as a tree? For example, one day you might be just fine with depth-first traversal of a tree. Yet the next day you might require breadth-first traversal. And the next week, you might need something else, like random access to the tree elements.
+
+---
+class: center, middle
+
+![Iterator Problem](assets/images/patterns/iterator-problem.png)
+
+---
+class: center, middle
+
+##### Mediator
+
+---
+class: center, middle
+
+*Mediator* is a behavioral design pattern that lets you reduce chaotic dependencies between objects. The pattern restricts direct communications between the objects and forces them to collaborate only via a mediator object.
+
+---
+
+Say you have a dialog for creating and editing customer profiles. It consists of various form controls such as text fields, checkboxes, buttons, etc.
+
+Some of the form elements may interact with others. For instance, selecting the “I have a dog” checkbox may reveal a hidden text field for entering the dog’s name. Another example is the submit button that has to validate values of all fields before saving the data.
+
+By having this logic implemented directly inside the code of the form elements you make these elements’ classes much harder to reuse in other forms of the app. For example, you won’t be able to use that checkbox class inside another form, because it’s coupled to the dog’s text field. You can use either all the classes involved in rendering the profile form, or none at all.
+
+---
+class: center, middle
+
+![Mediator Problem](assets/images/patterns/mediator-problem.png)
+
+---
+class: center, middle
+
+The Mediator pattern suggests that you should cease all direct communication between the components which you want to make independent of each other. Instead, these components must collaborate indirectly, by calling a special mediator object that redirects the calls to appropriate components. As a result, the components depend only on a single mediator class instead of being coupled to dozens of their colleagues.
 
 ---
 class: center, middle
