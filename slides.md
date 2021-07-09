@@ -1230,6 +1230,11 @@ class: center, middle
 ---
 class: center, middle
 
+Iterator facilitates the traversal of a data structure.
+
+---
+class: center, middle
+
 ##### Mediator
 
 ---
@@ -1256,6 +1261,190 @@ class: center, middle
 The Mediator pattern suggests that you should cease all direct communication between the components which you want to make independent of each other. Instead, these components must collaborate indirectly, by calling a special mediator object that redirects the calls to appropriate components. As a result, the components depend only on a single mediator class instead of being coupled to dozens of their colleagues.
 
 ---
+class: center, middle
+
+##### Memento
+
+---
+class: center, middle
+
+*Memento* is a behavioral design pattern that lets you save and restore the previous state of an object without revealing the details of its implementation.
+
+---
+
+Imagine that you’re creating a text editor app. In addition to simple text editing, your editor can format text, insert inline images, etc.
+
+At some point, you decided to let users undo any operations carried out on the text. This feature has become so common over the years that nowadays people expect every app to have it. For the implementation, you chose to take the direct approach. Before performing any operation, the app records the state of all objects and saves it in some storage. Later, when a user decides to revert an action, the app fetches the latest snapshot from the history and uses it to restore the state of all objects.
+
+---
+
+Let’s think about those state snapshots. How exactly would you produce one? You’d probably need to go over all the fields in an object and copy their values into storage. However, this would only work if the object had quite relaxed access restrictions to its contents. Unfortunately, most real objects won’t let others peek inside them that easily, hiding all significant data in private fields.
+
+Ignore that problem for now and let’s assume that our objects behave like hippies: preferring open relations and keeping their state public. While this approach would solve the immediate problem and let you produce snapshots of objects’ states at will, it still has some serious issues. In the future, you might decide to refactor some of the editor classes, or add or remove some of the fields. Sounds easy, but this would also require changing the classes responsible for copying the state of the affected objects.
+
+---
+class: center, middle
+
+![Memento Problem](assets/images/patterns/memento-problem.png)
+
+---
+class: center, middle
+
+##### Observer
+
+---
+class: center, middle
+
+*Observer* is a behavioral design pattern that lets you define a subscription mechanism to notify multiple objects about any events that happen to the object they’re observing.
+
+---
+
+Imagine that you have two types of objects: a Customer and a Store. The customer is very interested in a particular brand of product (say, it’s a new model of the iPhone) which should become available in the store very soon.
+
+The customer could visit the store every day and check product availability. But while the product is still en route, most of these trips would be pointless.
+
+---
+class: center, middle
+
+![Observer Problem](assets/images/patterns/observer-problem.png)
+
+---
+class: center, middle
+
+##### State
+
+---
+class: center, middle
+
+*State* is a behavioral design pattern that lets an object alter its behavior when its internal state changes. It appears as if the object changed its class.
+
+---
+class: center, middle
+
+The State pattern is closely related to the concept of a *Finite-State Machine*.
+
+---
+class: center, middle
+
+The main idea is that, at any given moment, there’s a finite number of states which a program can be in. Within any unique state, the program behaves differently, and the program can be switched from one state to another instantaneously. However, depending on a current state, the program may or may not switch to certain other states. These switching rules, called transitions, are also finite and predetermined.
+
+--
+
+Imagine that we have a Document class. A document can be in one of three states: Draft, Moderation and Published. The publish method of the document works a little bit differently in each state:
+
+- In `Draft`, it moves the document to moderation.
+
+- In `Moderation`, it makes the document public, but only if the current user is an administrator.
+
+- In `Published`, it doesn’t do anything at all.
+
+---
+class: center, middle
+
+![State Problem](assets/images/patterns/state-problem.png)
+
+---
+class: center, middle
+
+##### Strategy
+
+---
+class: center, middle
+
+*Strategy* is a behavioral design pattern that lets you define a family of algorithms, put each of them into a separate class, and make their objects interchangeable.
+
+---
+
+One day you decided to create a navigation app for casual travelers. The app was centered around a beautiful map which helped users quickly orient themselves in any city.
+
+One of the most requested features for the app was automatic route planning. A user should be able to enter an address and see the fastest route to that destination displayed on the map.
+
+---
+
+The first version of the app could only build the routes over roads. People who traveled by car were bursting with joy. But apparently, not everybody likes to drive on their vacation. So with the next update, you added an option to build walking routes. Right after that, you added another option to let people use public transport in their routes.
+
+However, that was only the beginning. Later you planned to add route building for cyclists. And even later, another option for building routes through all of a city’s tourist attractions.
+
+---
+
+While from a business perspective the app was a success, the technical part caused you many headaches. Each time you added a new routing algorithm, the main class of the navigator doubled in size. At some point, the beast became too hard to maintain.
+
+Any change to one of the algorithms, whether it was a simple bug fix or a slight adjustment of the street score, affected the whole class, increasing the chance of creating an error in already-working code.
+
+In addition, teamwork became inefficient. Your teammates, who had been hired right after the successful release, complain that they spend too much time resolving merge conflicts. Implementing a new feature requires you to change the same huge class, conflicting with the code produced by other people.
+
+---
+class: center, middle
+
+![Strategy Problem](assets/images/patterns/strategy-problem.png)
+
+---
+class: center, middle
+
+The Strategy pattern suggests that you take a class that does something specific in a lot of different ways and extract all of these algorithms into separate classes called strategies.
+
+---
+class: center, middle
+
+##### Template Method
+
+---
+class: center, middle
+
+*Template Method* is a behavioral design pattern that defines the skeleton of an algorithm in the superclass but lets subclasses override specific steps of the algorithm without changing its structure.
+
+---
+
+Imagine that you’re creating a data mining application that analyzes corporate documents. Users feed the app documents in various formats (PDF, DOC, CSV), and it tries to extract meaningful data from these docs in a uniform format.
+
+The first version of the app could work only with DOC files. In the following version, it was able to support CSV files. A month later, you “taught” it to extract data from PDF files.
+
+At some point, you noticed that all three classes have a lot of similar code. While the code for dealing with various data formats was entirely different in all classes, the code for data processing and analysis is almost identical. Wouldn’t it be great to get rid of the code duplication, leaving the algorithm structure intact?
+
+---
+class: center, middle
+
+![Template Method Problem](assets/images/patterns/template_method-problem.png)
+
+---
+class: center, middle
+
+The Template Method pattern suggests that you break down an algorithm into a series of steps, turn these steps into methods, and put a series of calls to these methods inside a single template method. The steps may either be abstract, or have some default implementation. To use the algorithm, the client is supposed to provide its own subclass, implement all abstract steps, and override some of the optional ones if needed (but not the template method itself).
+
+---
+class: center, middle
+
+##### Visitor
+
+---
+class: center, middle
+
+*Visitor* is a behavioral design pattern that lets you separate algorithms from the objects on which they operate.
+
+---
+
+Imagine that your team develops an app which works with geographic information structured as one colossal graph. Each node of the graph may represent a complex entity such as a city, but also more granular things like industries, sightseeing areas, etc. The nodes are connected with others if there’s a road between the real objects that they represent. Under the hood, each node type is represented by its own class, while each specific node is an object.
+
+At some point, you got a task to implement exporting the graph into XML format. At first, the job seemed pretty straightforward. You planned to add an export method to each node class and then leverage recursion to go over each node of the graph, executing the export method. The solution was simple and elegant: thanks to polymorphism, you weren’t coupling the code which called the export method to concrete classes of nodes.
+
+---
+
+Unfortunately, the system architect refused to allow you to alter existing node classes. He said that the code was already in production and he didn’t want to risk breaking it because of a potential bug in your changes.
+
+Besides, he questioned whether it makes sense to have the XML export code within the node classes. The primary job of these classes was to work with geodata. The XML export behavior would look alien there.
+
+---
+class: center, middle
+
+![Visitor Problem](assets/images/patterns/visitor-problem.png)
+
+---
+class: center, middle
+
+The Visitor pattern suggests that you place the new behavior into a separate class called visitor, instead of trying to integrate it into existing classes. The original object that had to perform the behavior is now passed to one of the visitor’s methods as an argument, providing the method access to all necessary data contained within the object.
+
+---
+
 class: center, middle
 
 Code
